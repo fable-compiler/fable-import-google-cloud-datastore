@@ -5,7 +5,7 @@ open Fable.Import
 open Util
 open Fable.Import.Google.Cloud.Datastore
 
-let datastoreTests () =
+let tests () =
   describe "Google Datastore" <| fun _ ->
     describe "UnqualifiedKey" <| fun _ ->
       describe "createFromKeyPath" <| fun _ ->
@@ -14,7 +14,7 @@ let datastoreTests () =
         let testKind, testEntityId = "material", "testId"
         let terminal = Term( Key (Kind testKind, EntityId testEntityId))
         let ancestor1 = Ancestor( Key (Kind testAncestorKind1, EntityId testAncestorEntityId1), terminal)
-        let ancestor0 = Ancestor( Key (Kind testAncestorKind0, EntityId testAncestorEntityId0), ancestor1)          
+        let ancestor0 = Ancestor( Key (Kind testAncestorKind0, EntityId testAncestorEntityId0), ancestor1)
         it "created for term only" <| fun () ->
           let actual = UnqualifiedKey.createFromKeyPath terminal
           let actualArray = UnqualifiedKey.get actual
@@ -31,4 +31,4 @@ let datastoreTests () =
           let expectedArray = [| testAncestorKind0; testAncestorEntityId0; testAncestorKind1; testAncestorEntityId1; testKind; testEntityId |]
           Assert.deepEqual(actualArray, expectedArray)
 
-datastoreTests ()
+tests ()

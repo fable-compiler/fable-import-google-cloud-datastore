@@ -6,14 +6,14 @@ open Fable.Import
 let Assert = Node.``assert``
 
 type Mocha =
-    [<Global>]
-    abstract describe: string * (unit -> unit) -> unit
-    [<Global>]
-    abstract it: string * (unit -> unit) -> unit
-    [<Global>]
-    abstract it: string * ((unit -> unit) -> unit) -> unit
-    [<Global>]
-    abstract it: string * (unit -> JS.Promise<'a>) -> unit
+  [<Global>]
+  abstract describe: string * (unit -> unit) -> unit
+  [<Global>]
+  abstract it: string * (unit -> unit) -> unit
+  [<Global>]
+  abstract it: string * ((unit -> unit) -> unit) -> unit
+  [<Global>]
+  abstract it: string * (unit -> JS.Promise<'a>) -> unit
 
 [<Import("*","assert")>]
 let m : Mocha = jsNative
