@@ -1,10 +1,6 @@
 <Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <PathPrefix>..</PathPrefix>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(DevBuild)' == 'true'">
-    <PathPrefix>node_modules</PathPrefix>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src/Datastore.fs" />
@@ -15,7 +11,10 @@
     <PackageReference Include="Fable.Core" Version="1.0.0-narumi-*" />
     <DotNetCliToolReference Include="dotnet-fable" Version="1.0.0-narumi-*" />
   </ItemGroup>
-  <ItemGroup>
-      <ProjectReference Include="$(PathPrefix)\fable-import-google-cloud\Fable.Import.Google.Cloud.fsproj" />
+  <ItemGroup Condition="$(MSBuildThisFileDirectory.Contains('node_modules'))">
+      <ProjectReference Include="node_modules\fable-import-google-cloud\Fable.Import.Google.Cloud.fsproj" />
+  </ItemGroup>
+  <ItemGroup Condition="!$(MSBuildThisFileDirectory.Contains('node_modules'))">
+      <ProjectReference Include="..\fable-import-google-cloud\Fable.Import.Google.Cloud.fsproj" />
   </ItemGroup>
 </Project>
