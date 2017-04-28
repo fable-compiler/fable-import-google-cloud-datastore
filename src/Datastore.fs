@@ -41,15 +41,38 @@ type Options =
     apiEndpoint: string option
     ``namespace``: string option }
 
-module datastore_types =
+module JsInterop =
   type Datastore =
     abstract key: UnqualifiedKey.T -> DatastoreKey
     abstract get: DatastoreKey -> JS.Promise<'a option>
     abstract save: DatastoreEntity<'a> -> JS.Promise<ApiResponse>
 
-  type Globals =
+  type DatastoreProvider =
     [<Emit("$0($1)")>]
     abstract Init : ?options:Options -> Datastore
 
-[<Import("default","@google-cloud/datastore")>]
-let datastore: datastore_types.Globals = jsNative
+  [<Import("default","@google-cloud/datastore")>]
+  let datastore: DatastoreProvider = jsNative
+
+type [<Erase>] Datastore = Datastore of JsInterop.Datastore
+
+module Datastore =
+  let init () = JsInterop.datastore.Init() |> Datastore
+  let initWithOpts opts = JsInterop.datastore.Init(opts) |> Datastore
+
+  let get (Datastore ds) key =
+    ds.get(key)
+
+  let save (Datastore ds) key entity =
+    ds.save(
+      { key = key
+        data = entity }
+    )
+
+module DatastoreKey =
+  let ofKeyPath (Datastore ds) keyPath =
+    let flatKey = UnqualifiedKey.createFromKeyPath keyPath
+    ds.key(flatKey)
+
+  let ofKey (Datastore ds) key =
+    ds.key(UnqualifiedKey.createFromKey key)

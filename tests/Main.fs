@@ -8,7 +8,7 @@ open Fable.Import.Google.Cloud.Datastore
 let tests () =
   describe "Google Datastore" <| fun _ ->
     it "exists" <| fun _ ->
-      Assert.ok(datastore)
+      Assert.ok(JsInterop.datastore)
     describe "UnqualifiedKey" <| fun _ ->
       describe "createFromKeyPath" <| fun _ ->
         let testAncestorKind0, testAncestorEntityId0 = "ancestor0", "ancestorId0"
