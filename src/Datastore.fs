@@ -42,8 +42,6 @@ type Options =
     ``namespace``: string option }
 
 module datastore_types =
-  type ApiResponse = interface end
-
   type Datastore =
     abstract key: UnqualifiedKey.T -> DatastoreKey
     abstract get: DatastoreKey -> JS.Promise<'a option>
