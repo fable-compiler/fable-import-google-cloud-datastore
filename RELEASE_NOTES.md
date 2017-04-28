@@ -1,3 +1,7 @@
+### 0.2.1
+
+* Fix for transitive dependency search
+
 ### 0.2.0
 
 * Add idiomatic F# interface
