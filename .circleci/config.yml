@@ -19,7 +19,7 @@ jobs:
           name: Restore dependencies
           command: |
             npm install
-            dotnet restore /p:DevBuild=true
+            dotnet restore
       - save_cache:
           key: npm-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
